@@ -796,3 +796,24 @@ footer p {
   z-index: 9999;
   border-radius: 8px;
 }
+
+.result-box {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  background: #f5f5f5;
+  display: none;
+}
+
+.result-box.success {
+  border-left: 5px solid green;
+}
+
+.result-box.error {
+  border-left: 5px solid red;
+}
+
+.vehicle-card.active {
+  border-color: green;
+  background: rgba(0, 255, 0, 0.1);
+}

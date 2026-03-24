@@ -13,10 +13,12 @@ document.addEventListener('DOMContentLoaded', () => {
     currentUser = JSON.parse(localStorage.getItem('agripool_user'));
 });
 
-// ✅ REAL DISTANCE FUNCTION
-const API_KEY_OC = "1b7f11b5d9d8474bbfdbffac0a1de484"; // already done
+// ✅ YOUR API KEY
+const API_KEY_OC = "1b7f11b5d9d8474bbfdbffac0a1de484";
 
-// 🔍 AUTOCOMPLETE FUNCTION
+// ============================
+// 🔍 AUTOCOMPLETE
+// ============================
 async function getSuggestions(query, boxId, inputId) {
     if (query.length < 3) {
         document.getElementById(boxId).innerHTML = "";
@@ -33,8 +35,11 @@ async function getSuggestions(query, boxId, inputId) {
         data.results.forEach(place => {
             const div = document.createElement("div");
 
-            // ✅ cleaner village display
-            div.textContent = place.components.village || place.components.town || place.components.city || place.formatted;
+            div.textContent =
+                place.components.village ||
+                place.components.town ||
+                place.components.city ||
+                place.formatted;
 
             div.onclick = () => {
                 document.getElementById(inputId).value = place.formatted;
@@ -49,7 +54,7 @@ async function getSuggestions(query, boxId, inputId) {
     }
 }
 
-// 🧠 INPUT LISTENERS
+// INPUT LISTENERS
 document.getElementById("pickup").addEventListener("input", (e) => {
     getSuggestions(e.target.value, "pickup-suggestions", "pickup");
 });
@@ -58,8 +63,53 @@ document.getElementById("dropoff").addEventListener("input", (e) => {
     getSuggestions(e.target.value, "dropoff-suggestions", "dropoff");
 });
 
+// ============================
+// 📍 GET REAL DISTANCE
+// ============================
+async function getCoords(place) {
+    const res = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${place}&key=${API_KEY_OC}`);
+    const data = await res.json();
 
-// VEHICLE SELECT UI
+    if (!data.results.length) {
+        alert("Location not found");
+        return null;
+    }
+
+    return data.results[0].geometry;
+}
+
+function calculateDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371;
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+
+    const a =
+        Math.sin(dLat / 2) ** 2 +
+        Math.cos(lat1 * Math.PI / 180) *
+        Math.cos(lat2 * Math.PI / 180) *
+        Math.sin(dLon / 2) ** 2;
+
+    return 2 * R * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+async function getRealDistance(pickup, dropoff) {
+    try {
+        const p1 = await getCoords(pickup);
+        const p2 = await getCoords(dropoff);
+
+        if (!p1 || !p2) return null;
+
+        return calculateDistance(p1.lat, p1.lng, p2.lat, p2.lng);
+
+    } catch (err) {
+        alert("Error fetching distance");
+        return null;
+    }
+}
+
+// ============================
+// 🚛 VEHICLE SELECT UI
+// ============================
 document.querySelectorAll('.vehicle-card').forEach(card => {
     card.addEventListener('click', () => {
         document.querySelectorAll('.vehicle-card').forEach(c => c.classList.remove('active'));
@@ -67,7 +117,10 @@ document.querySelectorAll('.vehicle-card').forEach(card => {
         card.querySelector('input').checked = true;
     });
 });
-// ✅ FORM SUBMIT
+
+// ============================
+// 📊 FORM SUBMIT
+// ============================
 document.getElementById('transport-form').addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -76,6 +129,7 @@ document.getElementById('transport-form').addEventListener('submit', async (e) =
     const vehicle = document.querySelector('input[name="vehicle"]:checked');
 
     const resultBox = document.getElementById('result-box');
+    const confirmBtn = document.getElementById("confirm-booking-btn");
 
     if (!vehicle) {
         alert("Select vehicle");
@@ -92,56 +146,53 @@ document.getElementById('transport-form').addEventListener('submit', async (e) =
         resultBox.className = "result-box error";
         resultBox.innerHTML = `
             <h3>❌ Service Not Available</h3>
-            <p><strong>Distance:</strong> ${distance.toFixed(2)} km</p>
-            <p>Sorry, destination is too far. We currently support only up to 250 km.</p>
+            <p>Distance: ${distance.toFixed(2)} km</p>
+            <p>We support only up to 250 km.</p>
         `;
+        confirmBtn.style.display = "none";
         return;
     }
 
-    // ✅ VEHICLE COST
+    // ✅ COST LOGIC
     let rate = 15;
     if (vehicle.value === "mini") rate = 20;
     if (vehicle.value === "truck") rate = 30;
     if (vehicle.value === "tractor") rate = 10;
 
     const baseCost = distance * rate;
-
-    // 📊 STATE TYPE
-    let type = distance <= 300 ? "In-State" : "Out-of-State";
-
-    // EXTRA CHARGES
-    let loading = 800;
-    let toll = distance > 300 ? distance * 3 : 0;
+    const loading = 800;
+    const toll = distance > 150 ? distance * 3 : 0;
 
     const total = baseCost + loading + toll;
+
+    currentDistance = distance;
+    currentCost = total;
 
     resultBox.className = "result-box success";
     resultBox.innerHTML = `
         <h3>✅ Transport Estimate</h3>
 
-        <p><strong>📍 Distance:</strong> ${distance.toFixed(2)} km</p>
-        <p><strong>🚛 Vehicle:</strong> ${vehicle.value.toUpperCase()}</p>
-        <p><strong>📦 Transport Type:</strong> ${type}</p>
+        <p><b>📍 Distance:</b> ${distance.toFixed(2)} km</p>
+        <p><b>🚛 Vehicle:</b> ${vehicle.value.toUpperCase()}</p>
 
         <hr>
 
-        <p><strong>💰 Base Cost:</strong> ₹${baseCost.toFixed(0)}</p>
-        <p><strong>📦 Loading Charges:</strong> ₹${loading}</p>
-        <p><strong>🛣 Toll Charges:</strong> ₹${toll.toFixed(0)}</p>
+        <p>💰 Base Cost: ₹${baseCost.toFixed(0)}</p>
+        <p>📦 Loading: ₹${loading}</p>
+        <p>🛣 Toll: ₹${toll.toFixed(0)}</p>
 
         <hr>
 
-        <h2>Total Cost: ₹${total.toFixed(0)}</h2>
+        <h2>Total: ₹${total.toFixed(0)}</h2>
     `;
+
+    confirmBtn.style.display = "block";
 });
 
-// ✅ CONFIRM BOOKING BUTTON
+// ============================
+// ✅ CONFIRM BOOKING
+// ============================
 document.getElementById("confirm-booking-btn").addEventListener("click", async () => {
-
-    if (!currentUser) {
-        alert("Please login first");
-        return;
-    }
 
     const pickup = document.getElementById('pickup').value;
     const dropoff = document.getElementById('dropoff').value;
@@ -149,16 +200,17 @@ document.getElementById("confirm-booking-btn").addEventListener("click", async (
 
     try {
         await addDoc(collection(db, "transport_bookings"), {
-            userId: currentUser.uid,
-            pickup: pickup,
-            dropoff: dropoff,
-            vehicle: vehicle,
+            userId: currentUser?.uid || "guest",
+            pickup,
+            dropoff,
+            vehicle,
             distance: currentDistance,
             cost: currentCost,
             createdAt: new Date()
         });
 
         alert("✅ Booking Confirmed!");
+        window.location.href = "orders.html";
 
     } catch (error) {
         console.error(error);

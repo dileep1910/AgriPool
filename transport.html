@@ -211,57 +211,66 @@
 
                 <form id="transport-form">
 
-                    <div class="form-row">
+                    <!-- PICKUP -->
+                    <div class="form-group">
+                        <label>Pickup Point</label>
                         <div style="position:relative;">
-                            <input type="text" id="pickup" class="form-control" autocomplete="off">
+                            <input type="text" id="pickup" class="form-control" placeholder="Enter village / city"
+                                autocomplete="off">
                             <div id="pickup-suggestions" class="suggestions-box"></div>
                         </div>
+                    </div>
 
+                    <!-- DROPOFF -->
+                    <div class="form-group">
+                        <label>Drop Point</label>
                         <div style="position:relative;">
-                            <input type="text" id="dropoff" class="form-control" autocomplete="off">
+                            <input type="text" id="dropoff" class="form-control" placeholder="Enter destination"
+                                autocomplete="off">
                             <div id="dropoff-suggestions" class="suggestions-box"></div>
                         </div>
                     </div>
 
+                    <!-- GOODS TYPE -->
                     <div class="form-group">
                         <label>Goods Type</label>
                         <select id="crop" class="form-control">
-                            <option value="">Select</option>
+                            <option value="">Select Category</option>
                             <option value="crops">Crops</option>
                             <option value="vegetables">Vegetables</option>
+                            <option value="fruits">Fruits</option>
+                            <option value="cotton">Cotton</option>
+                            <option value="flowers">Flowers</option>
                         </select>
                     </div>
 
+                    <!-- VEHICLES -->
                     <div class="vehicle-options">
 
                         <label class="vehicle-card">
-                            <input type="radio" name="vehicle" value="Truck" hidden>
+                            <input type="radio" name="vehicle" value="truck" hidden>
                             <i class="fa-solid fa-truck-moving"></i>
                             <h4>Truck</h4>
                         </label>
 
                         <label class="vehicle-card">
-                            <input type="radio" name="vehicle" value="Mini Truck" hidden>
+                            <input type="radio" name="vehicle" value="mini" hidden>
                             <i class="fa-solid fa-truck"></i>
                             <h4>Mini Truck</h4>
                         </label>
 
                         <label class="vehicle-card">
-                            <input type="radio" name="vehicle" value="Tractor" hidden>
+                            <input type="radio" name="vehicle" value="tractor" hidden>
                             <i class="fa-solid fa-tractor"></i>
                             <h4>Tractor</h4>
                         </label>
 
                     </div>
 
-                    <div id="distance-result"></div>
-                    <div id="calc-cost"></div>
+                    <!-- RESULT BOX -->
+                    <div id="result-box" class="result-box"></div>
 
-                    <button type="submit" class="btn">Calculate</button>
-
-                    <button type="button" id="confirm-booking-btn" class="btn btn-secondary" style="display:none;">
-                        Confirm Booking
-                    </button>
+                    <button type="submit" class="btn">Calculate Transport</button>
 
                 </form>
 

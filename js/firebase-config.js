@@ -5,12 +5,13 @@ import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.0/firebase
 
 // TODO: Replace with your app's actual Firebase project configuration from the Firebase Console
 const firebaseConfig = {
-  apiKey: "AIzaSy_YOUR_API_KEY_HERE_FOR_TESTING",
-  authDomain: "agripool-test.firebaseapp.com",
-  projectId: "agripool-test",
-  storageBucket: "agripool-test.appspot.com",
-  messagingSenderId: "1234567890",
-  appId: "1:1234567890:web:abcdef123456"
+  apiKey: "AIzaSyD1c_KCZWMjOr7banlCrtNhLkEoUHgb680",
+  authDomain: "agripool-33.firebaseapp.com",
+  projectId: "agripool-33",
+  storageBucket: "agripool-33.firebasestorage.app",
+  messagingSenderId: "925855716787",
+  appId: "1:925855716787:web:13d961758455fe1b4067c6",
+  measurementId: "G-N50HEQS824"
 };
 
 // Initialize Firebase

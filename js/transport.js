@@ -1,98 +1,111 @@
-import { setupNavbar } from './navbar.js';
 import { initAuth } from './auth.js';
 import { db } from './firebase-config.js';
 import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 initAuth(true, false);
-setupNavbar();
 
 let currentUser = null;
 let currentDistance = 0;
 let currentCost = 0;
 
+// ✅ LOAD USER
 document.addEventListener('DOMContentLoaded', () => {
     currentUser = JSON.parse(localStorage.getItem('agripool_user'));
 });
 
-document.getElementById('transport-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const vehicle = document.querySelector('input[name="vehicle"]:checked');
-    const resultDiv = document.getElementById('distance-result');
-    const costDiv = document.getElementById('calc-cost');
-    const btnConfirm = document.getElementById('confirm-booking-btn');
-    const checkBtn = document.getElementById('check-btn');
+// ✅ REAL DISTANCE FUNCTION
+const API_KEY_OC = "1b7f11b5d9d8474bbfdbffac0a1de484"; // already done
 
-    if (!vehicle) {
-        alert("Please select a vehicle type");
+// 🔍 AUTOCOMPLETE FUNCTION
+async function getSuggestions(query, boxId, inputId) {
+    if (query.length < 3) {
+        document.getElementById(boxId).innerHTML = "";
         return;
     }
 
-    // Mock distance API (Generate random between 50 and 350 km to allow testing both >250 and <250 limits easily)
-    currentDistance = Math.floor(Math.random() * 300) + 50;
-    
-    resultDiv.style.display = 'block';
-    costDiv.style.display = 'none';
-    btnConfirm.style.display = 'none';
+    try {
+        const res = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${query}&key=${API_KEY_OC}&countrycode=in&limit=5`);
+        const data = await res.json();
 
-    if (currentDistance > 250) {
-        resultDiv.style.color = '#d32f2f';
-        resultDiv.textContent = `Distance is ${currentDistance} km. Distance is too far. We cannot provide transport. Sorry for inconvenience.`;
-        checkBtn.textContent = 'Recalculate (Demo)';
-    } else {
-        resultDiv.style.color = '#1565c0';
-        resultDiv.textContent = `Estimated Distance: ${currentDistance} km.`;
-        
-        let rate = 1.5;
-        if (vehicle.value === 'Truck') rate = 3.0;
-        if (vehicle.value === 'Tractor') rate = 2.0;
-        
-        currentCost = currentDistance * rate + 50; // base fare
-        costDiv.textContent = `Estimated Cost: $${currentCost.toFixed(2)}`;
-        costDiv.style.display = 'block';
-        btnConfirm.style.display = 'inline-block';
-        checkBtn.style.display = 'none'; 
+        const box = document.getElementById(boxId);
+        box.innerHTML = "";
+
+        data.results.forEach(place => {
+            const div = document.createElement("div");
+
+            // ✅ cleaner village display
+            div.textContent = place.components.village || place.components.town || place.components.city || place.formatted;
+
+            div.onclick = () => {
+                document.getElementById(inputId).value = place.formatted;
+                box.innerHTML = "";
+            };
+
+            box.appendChild(div);
+        });
+
+    } catch (err) {
+        console.log("Autocomplete error:", err);
     }
+}
+
+// 🧠 INPUT LISTENERS
+document.getElementById("pickup").addEventListener("input", (e) => {
+    getSuggestions(e.target.value, "pickup-suggestions", "pickup");
 });
 
-document.getElementById('confirm-booking-btn').addEventListener('click', async () => {
-    const pickup = document.getElementById('pickup').value;
-    const dropoff = document.getElementById('dropoff').value;
-    const crop = document.getElementById('crop').value;
-    const vehicle = document.querySelector('input[name="vehicle"]:checked').value;
-    
-    const driverNames = ['Ramesh Singh', 'Ashok Kumar', 'Rajesh Sharma', 'Dilip Yadav'];
-    const driver = driverNames[Math.floor(Math.random() * driverNames.length)];
-    const phone = '98' + Math.floor(Math.random() * 90000000 + 10000000);
-    const plate = 'HR ' + Math.floor(Math.random()*90+10) + ' AB ' + Math.floor(Math.random()*9000+1000);
-    
-    const bookingData = {
-        uid: currentUser ? currentUser.uid : 'guest',
-        pickup,
-        dropoff,
-        crop,
-        vehicle,
-        distance: currentDistance,
-        cost: currentCost,
-        driverName: driver,
-        driverPhone: phone,
-        vehiclePlate: plate,
-        date: new Date().toISOString()
-    };
+document.getElementById("dropoff").addEventListener("input", (e) => {
+    getSuggestions(e.target.value, "dropoff-suggestions", "dropoff");
+});
 
-    try {
-        await addDoc(collection(db, `users/${bookingData.uid}/bookings`), bookingData);
-    } catch(e) {
-        console.log('Mock firestore save error', e);
-        let bookings = JSON.parse(localStorage.getItem('agripool_bookings')) || [];
-        bookings.push(bookingData);
-        localStorage.setItem('agripool_bookings', JSON.stringify(bookings));
+// ✅ FORM SUBMIT
+document.getElementById('transport-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const pickup = document.getElementById('pickup').value.trim();
+    const dropoff = document.getElementById('dropoff').value.trim();
+    const vehicle = document.querySelector('input[name="vehicle"]:checked');
+
+    const resultDiv = document.getElementById('distance-result');
+    const costDiv = document.getElementById('calc-cost');
+    const confirmBtn = document.getElementById('confirm-booking-btn');
+
+    if (!vehicle) {
+        alert("Select vehicle");
+        return;
     }
 
-    document.getElementById('transport-form').style.display = 'none';
-    const successDiv = document.getElementById('booking-success');
-    document.getElementById('s-driver').textContent = driver;
-    document.getElementById('s-phone').textContent = phone;
-    document.getElementById('s-vehicle').textContent = vehicle;
-    document.getElementById('s-plate').textContent = plate;
-    successDiv.style.display = 'block';
+    // ✅ REAL DISTANCE
+    const distance = await getRealDistance(pickup, dropoff);
+    if (!distance) return;
+
+    currentDistance = distance;
+
+    resultDiv.style.display = 'block';
+    resultDiv.style.color = '#1565c0';
+    resultDiv.textContent = `Distance: ${distance.toFixed(2)} km`;
+
+    // ❌ TOO FAR
+    if (distance > 250) {
+        resultDiv.style.color = '#d32f2f';
+        resultDiv.textContent =
+            `Sorry, drop point is too far (${distance.toFixed(2)} km). We can't provide service.`;
+
+        costDiv.style.display = 'none';
+        confirmBtn.style.display = 'none';
+        return;
+    }
+
+    // ✅ COST
+    let rate = 2;
+    if (vehicle.value === 'Truck') rate = 4;
+    if (vehicle.value === 'Mini Truck') rate = 3;
+    if (vehicle.value === 'Tractor') rate = 2.5;
+
+    currentCost = (distance * rate) + 100;
+
+    costDiv.style.display = 'block';
+    costDiv.textContent = `Cost: ₹${currentCost.toFixed(2)}`;
+
+    confirmBtn.style.display = 'inline-block';
 });

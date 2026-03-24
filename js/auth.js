@@ -134,7 +134,7 @@ export function logout() {
 }
 
 
-// 📝 REGISTER
+// 📝 REGISTER (✅ FIXED)
 export async function registerUser() {
     const name = document.getElementById("name").value.trim();
     const email = document.getElementById("email").value.trim();
@@ -152,7 +152,10 @@ export async function registerUser() {
         email
     });
 
-    // 🔁 Redirect to login
+    // ✅ IMPORTANT FIX: logout immediately after register
+    await signOut(auth);
+
+    // ✅ Redirect to login page
     window.location.href = "login.html";
 }
 

@@ -1,143 +1,294 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Transport - AgriPool</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <link rel="stylesheet" href="styles.css">
+
+    <style>
+        /* NAVBAR FIX */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .nav-left {
+            width: 60px;
+        }
+
+        .nav-center {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            width: 60px;
+        }
+
+        .back-btn {
+            font-size: 1.4rem;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            color: var(--primary-green);
+        }
+
+        /* PROFILE FIX */
+        .profile-container {
+            position: relative;
+        }
+
+        #profile-btn {
+            width: 38px;
+            height: 38px;
+            background: var(--primary-green);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        /* DROPDOWN */
+        .profile-dropdown {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background: white;
+            box-shadow: var(--shadow);
+            border-radius: 10px;
+            width: 220px;
+            display: none;
+            z-index: 1000;
+        }
+
+        .profile-dropdown.show {
+            display: block;
+        }
+
+        .dropdown-header {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dropdown-menu {
+            list-style: none;
+            padding: 10px;
+        }
+
+        .dropdown-menu li {
+            margin: 10px 0;
+        }
+
+        .dropdown-menu a {
+            text-decoration: none;
+            color: var(--text-dark);
+        }
+
+        .dropdown-menu a:hover {
+            color: var(--primary-green);
+        }
+
+        /* CENTER FORM FIX */
+        .transport-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .booking-section {
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        /* PERFECT CENTER INITIAL */
+        #profile-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .transport-container {
+            height: calc(100vh - 120px);
+            /* full screen minus navbar+header */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .booking-section {
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .page-header {
+            flex-shrink: 0;
+        }
+
+        .transport-container {
+            flex: 1;
+        }
+    </style>
 </head>
+
 <body>
+
+    <!-- NAVBAR -->
     <nav class="navbar">
-        <a href="index.html" class="logo">
-            <i class="fa-solid fa-wheat-awn"></i> AgriPool
-        </a>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="shop.html">Shop</a></li>
-            <li><a href="transport.html" class="active">Transport</a></li>
-        </ul>
-        <div class="nav-actions">
-            <a href="cart.html" class="cart-icon">
-                <i class="fa-solid fa-cart-shopping"></i>
-                <span class="cart-count">0</span>
+
+        <!-- LEFT -->
+        <div class="nav-left">
+            <a href="index.html" class="back-btn">
+                <i class="fa-solid fa-arrow-left"></i>
             </a>
+        </div>
+
+        <!-- CENTER -->
+        <div class="nav-center">
+            <a href="index.html" class="logo">
+                <i class="fa-solid fa-wheat-awn"></i> AgriPool
+            </a>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="nav-right">
             <div class="profile-container">
-                <div id="profile-btn" style="display: none;"></div>
+                <div id="profile-btn">K</div>
+
                 <div class="profile-dropdown" id="profile-dropdown">
                     <div class="dropdown-header">
-                        <h4 id="dropdown-name">User</h4>
-                        <p id="dropdown-email">user@example.com</p>
+                        <h4 id="dropdown-name">Kumar</h4>
+                        <p id="dropdown-email">kumar@gmail.com</p>
                     </div>
                     <ul class="dropdown-menu">
-                        <li><a href="activity.html"><i class="fa-solid fa-chart-line"></i> My Activity</a></li>
-                        <li><a href="orders.html"><i class="fa-solid fa-box"></i> My Orders</a></li>
-                        <li><a href="track.html"><i class="fa-solid fa-location-dot"></i> Track Order</a></li>
-                        <li><a href="#" onclick="logoutUser()"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+                        <li><a href="activity.html">My Activity</a></li>
+                        <li><a href="orders.html">My Orders</a></li>
+                        <li><a href="track.html">Track Order</a></li>
+                        <li><a href="#" onclick="logoutUser()">Logout</a></li>
                     </ul>
                 </div>
             </div>
         </div>
-        <button class="mobile-menu-btn">
-            <i class="fa-solid fa-bars"></i>
-        </button>
+
     </nav>
 
-    <header class="page-header" style="padding: 40px 5%;">
+    <!-- HEADER -->
+    <header class="page-header" style="padding: 20px 5%;">
         <h1>Book Transport</h1>
-        <p>Reliable logistics for your farm yield. Book a truck or tractor easily.</p>
+        <p>Reliable logistics for your farm yield</p>
     </header>
 
+    <!-- FORM -->
     <div class="transport-container">
         <div class="booking-section">
             <div class="booking-form">
-                <h2>Schedule a Pickup</h2>
+
+                <h2>Schedule Pickup</h2>
+
                 <form id="transport-form">
+
                     <div class="form-row">
-                        <div class="form-group">
-                            <label for="pickup">Pickup Location</label>
-                            <input type="text" id="pickup" class="form-control" placeholder="e.g., Village Name" required>
+                        <div style="position:relative;">
+                            <input type="text" id="pickup" class="form-control" autocomplete="off">
+                            <div id="pickup-suggestions" class="suggestions-box"></div>
                         </div>
-                        <div class="form-group">
-                            <label for="dropoff">Destination</label>
-                            <input type="text" id="dropoff" class="form-control" placeholder="e.g., Market Name" required>
+
+                        <div style="position:relative;">
+                            <input type="text" id="dropoff" class="form-control" autocomplete="off">
+                            <div id="dropoff-suggestions" class="suggestions-box"></div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="crop">Goods Type</label>
-                        <select id="crop" class="form-control" required>
-                            <option value="">Select type of goods</option>
+                        <label>Goods Type</label>
+                        <select id="crop" class="form-control">
+                            <option value="">Select</option>
                             <option value="crops">Crops</option>
                             <option value="vegetables">Vegetables</option>
-                            <option value="fruits">Fruits</option>
-                            <option value="other">Other</option>
                         </select>
                     </div>
 
-                    <label style="margin-bottom: 8px; font-weight: 500; color: var(--text-dark);">Select Vehicle Type</label>
                     <div class="vehicle-options">
-                        <label class="vehicle-card" style="display:block;">
-                            <input type="radio" name="vehicle" value="Truck" required style="display:none;">
+
+                        <label class="vehicle-card">
+                            <input type="radio" name="vehicle" value="Truck" hidden>
                             <i class="fa-solid fa-truck-moving"></i>
                             <h4>Truck</h4>
                         </label>
-                        <label class="vehicle-card" style="display:block;">
-                            <input type="radio" name="vehicle" value="Mini Truck" style="display:none;">
+
+                        <label class="vehicle-card">
+                            <input type="radio" name="vehicle" value="Mini Truck" hidden>
                             <i class="fa-solid fa-truck"></i>
                             <h4>Mini Truck</h4>
                         </label>
-                        <label class="vehicle-card" style="display:block;">
-                            <input type="radio" name="vehicle" value="Tractor" style="display:none;">
+
+                        <label class="vehicle-card">
+                            <input type="radio" name="vehicle" value="Tractor" hidden>
                             <i class="fa-solid fa-tractor"></i>
                             <h4>Tractor</h4>
                         </label>
-                        <label class="vehicle-card" style="display:block;">
-                            <input type="radio" name="vehicle" value="Pickup Van" style="display:none;">
-                            <i class="fa-solid fa-van-shuttle"></i>
-                            <h4>Pickup Van</h4>
-                        </label>
+
                     </div>
 
-                    <div id="distance-result" style="margin-bottom:15px; font-weight:bold; display:none;"></div>
-                    <div id="calc-cost" style="margin-bottom:20px; color:var(--primary-green); font-size:1.2rem; font-weight:bold; display:none;"></div>
+                    <div id="distance-result"></div>
+                    <div id="calc-cost"></div>
 
-                    <button type="submit" class="btn" id="check-btn">Calculate Distance & Cost</button>
-                    <button type="button" class="btn btn-secondary" id="confirm-booking-btn" style="display:none; margin-top:10px;">Confirm Booking</button>
+                    <button type="submit" class="btn">Calculate</button>
+
+                    <button type="button" id="confirm-booking-btn" class="btn btn-secondary" style="display:none;">
+                        Confirm Booking
+                    </button>
+
                 </form>
 
-                <div id="booking-success" style="display:none; margin-top:30px; padding:20px; background:rgba(76,175,80,0.1); border-radius:8px; border:1px solid var(--primary-green);">
-                    <h3 style="color:var(--primary-green); margin-bottom:15px;">Transport booked. Driver will contact you.</h3>
-                    <p><strong>Driver Name:</strong> <span id="s-driver"></span></p>
-                    <p><strong>Phone Number:</strong> <span id="s-phone"></span></p>
-                    <p><strong>Vehicle:</strong> <span id="s-vehicle"></span></p>
-                    <p><strong>Number Plate:</strong> <span id="s-plate"></span></p>
-                </div>
             </div>
 
-            <div class="transport-image-area" title="Agricultural Transport"></div>
+            <div class="transport-image-area"></div>
         </div>
     </div>
 
-    <footer>
-        <div class="logo" style="color: white; justify-content: center; margin-bottom: 20px;">
-            <i class="fa-solid fa-wheat-awn"></i> AgriPool
-        </div>
-        <p>&copy; 2026 AgriPool. Designed for Farmers.</p>
-    </footer>
-
+    <!-- SCRIPT -->
     <script type="module" src="js/transport.js"></script>
+
     <script>
-        // Simple logic for toggle active visual selection
-        document.querySelectorAll('.vehicle-card input').forEach(input => {
-            input.addEventListener('change', (e) => {
-                document.querySelectorAll('.vehicle-card').forEach(c => c.classList.remove('active'));
-                if(e.target.checked) e.target.parentElement.classList.add('active');
-            });
+        const profileBtn = document.getElementById("profile-btn");
+        const dropdown = document.getElementById("profile-dropdown");
+
+        profileBtn.addEventListener("click", () => {
+            dropdown.classList.toggle("show");
+        });
+
+        document.addEventListener("click", (e) => {
+            if (!profileBtn.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.classList.remove("show");
+            }
         });
     </script>
+
 </body>
+
 </html>

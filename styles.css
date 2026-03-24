@@ -229,9 +229,11 @@ body {
   .nav-links {
     display: none;
   }
+
   .mobile-menu-btn {
     display: block;
   }
+
   .nav-actions .btn {
     display: none;
   }
@@ -481,6 +483,7 @@ footer p {
   .shop-container {
     flex-direction: column;
   }
+
   .filters {
     width: 100%;
   }
@@ -685,7 +688,8 @@ footer p {
   transition: var(--transition);
 }
 
-.vehicle-card:hover, .vehicle-card.active {
+.vehicle-card:hover,
+.vehicle-card.active {
   border-color: var(--primary-green);
   background-color: rgba(76, 175, 80, 0.05);
 }
@@ -718,11 +722,42 @@ footer p {
   .booking-section {
     grid-template-columns: 1fr;
   }
+
   .transport-image-area {
     min-height: 250px;
     order: -1;
   }
+
   .form-row {
     grid-template-columns: 1fr;
   }
+}
+
+.profile-initial {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+
+.suggestions-box {
+  position: absolute;
+  width: 100%;
+  background: white;
+  border: 1px solid #ddd;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 9999;
+  border-radius: 8px;
+}
+
+.suggestions-box div {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.suggestions-box div:hover {
+  background: #f1f1f1;
 }

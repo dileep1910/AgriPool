@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriPool - Connecting Farmers to Markets</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <i class="fa-solid fa-wheat-awn"></i> AgriPool
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="transport.html">Transport</a></li>
+        </ul>
+        <div class="nav-actions">
+            <a href="cart.html" class="cart-icon">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="cart-count">0</span>
+            </a>
+            <a href="login.html" class="btn" id="nav-login-btn" style="padding: 8px 15px; font-size: 1rem;">Login <i class="fa-solid fa-arrow-right-to-bracket"></i></a>
+            
+            <div class="profile-container">
+                <div id="profile-btn" style="display: none;"></div>
+                <div class="profile-dropdown" id="profile-dropdown">
+                    <div class="dropdown-header">
+                        <h4 id="dropdown-name">User</h4>
+                        <p id="dropdown-email">user@example.com</p>
+                    </div>
+                    <ul class="dropdown-menu">
+                        <li><a href="activity.html"><i class="fa-solid fa-chart-line"></i> My Activity</a></li>
+                        <li><a href="orders.html"><i class="fa-solid fa-box"></i> My Orders</a></li>
+                        <li><a href="track.html"><i class="fa-solid fa-location-dot"></i> Track Order</a></li>
+                        <li><a href="#" onclick="logoutUser()"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <button class="mobile-menu-btn">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Connecting Farmers to Markets</h1>
+        <p>Book transport and order farming essentials easily</p>
+        <div class="hero-btns">
+            <a href="transport.html" class="btn" style="background-color: var(--highlight-yellow); color: var(--text-dark);">Book Transport</a>
+            <a href="shop.html" class="btn btn-secondary">Shop Now</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <h2>Explore Our Features</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <i class="fa-solid fa-truck feature-icon"></i>
+                <h3>Transport Booking</h3>
+                <p>Schedule a truck or tractor to transport your crops directly to the nearest market effortlessly.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fa-solid fa-seedling feature-icon"></i>
+                <h3>Buy Tools & Fertilizers</h3>
+                <p>Order high-quality fertilizers, seeds, and durable farming tools right from your home.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fa-solid fa-mobile-screen feature-icon"></i>
+                <h3>Easy for Farmers</h3>
+                <p>A simple and user-friendly platform designed specifically for the needs of modern farmers.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="logo" style="color: white; justify-content: center; margin-bottom: 20px;">
+            <i class="fa-solid fa-wheat-awn"></i> AgriPool
+        </div>
+        <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 40px; margin-bottom: 30px; text-align: left; max-width: 600px; margin-left: auto; margin-right: auto;">
+            <div style="flex: 1; min-width: 200px;">
+                <h4 style="margin-bottom: 10px; color: var(--highlight-yellow);">Contact Info</h4>
+                <p style="margin: 5px 0; font-size: 0.9rem; opacity: 1;"><i class="fa-solid fa-envelope"></i> support@agripool.com</p>
+                <p style="margin: 5px 0; font-size: 0.9rem; opacity: 1;"><i class="fa-solid fa-phone"></i> +1 (800) 555-FARM</p>
+            </div>
+            <div style="flex: 1; min-width: 200px;">
+                <h4 style="margin-bottom: 10px; color: var(--highlight-yellow);">About Us</h4>
+                <p style="margin: 5px 0; font-size: 0.9rem; opacity: 1;">AgriPool is dedicated to bridging the gap between farmers and the market by simplifying logistics and supply access.</p>
+            </div>
+        </div>
+        <div class="social-links">
+            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+        <p>&copy; 2026 AgriPool. Designed for Farmers.</p>
+    </footer>
+    
+    <script type="module">
+        import { initAuth } from './js/auth.js';
+        import { setupNavbar } from './js/navbar.js';
+        initAuth(true, false);
+        setupNavbar();
+    </script>
+</body>
+</html>

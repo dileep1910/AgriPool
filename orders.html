@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders - AgriPool</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <i class="fa-solid fa-wheat-awn"></i> AgriPool
+        </a>
+        <div class="nav-actions">
+            <div class="profile-container">
+                <div id="profile-btn" style="display: none;"></div>
+                <div class="profile-dropdown" id="profile-dropdown">
+                    <div class="dropdown-header">
+                        <h4 id="dropdown-name">User</h4>
+                        <p id="dropdown-email">user@example.com</p>
+                    </div>
+                    <ul class="dropdown-menu">
+                        <li><a href="activity.html"><i class="fa-solid fa-chart-line"></i> My Activity</a></li>
+                        <li><a href="orders.html"><i class="fa-solid fa-box"></i> My Orders</a></li>
+                        <li><a href="track.html"><i class="fa-solid fa-location-dot"></i> Track Order</a></li>
+                        <li><a href="#" onclick="logoutUser()"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div style="max-width: 800px; margin: 40px auto; padding: 0 5%; min-height: 60vh;">
+        <h1 style="color: var(--primary-green); margin-bottom: 30px;">My Orders</h1>
+        <div id="orders-list">
+            <!-- Populated via JS -->
+            <p>Loading orders...</p>
+        </div>
+    </div>
+    
+    <script type="module" src="js/orders.js"></script>
+</body>
+</html>

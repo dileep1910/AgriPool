@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - AgriPool</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <i class="fa-solid fa-wheat-awn"></i> AgriPool
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="transport.html">Transport</a></li>
+        </ul>
+        <div class="nav-actions">
+            <a href="cart.html" class="cart-icon">
+                <i class="fa-solid fa-cart-shopping" style="color: var(--primary-green);"></i>
+                <span class="cart-count">0</span>
+            </a>
+            <a href="login.html" class="btn" id="nav-login-btn" style="padding: 8px 15px; font-size: 1rem;">Login <i class="fa-solid fa-arrow-right-to-bracket"></i></a>
+            
+            <div class="profile-container">
+                <div id="profile-btn" style="display: none;"></div>
+                <div class="profile-dropdown" id="profile-dropdown">
+                    <div class="dropdown-header">
+                        <h4 id="dropdown-name">User</h4>
+                        <p id="dropdown-email">user@example.com</p>
+                    </div>
+                    <ul class="dropdown-menu">
+                        <li><a href="activity.html"><i class="fa-solid fa-chart-line"></i> My Activity</a></li>
+                        <li><a href="orders.html"><i class="fa-solid fa-box"></i> My Orders</a></li>
+                        <li><a href="track.html"><i class="fa-solid fa-location-dot"></i> Track Order</a></li>
+                        <li><a href="#" onclick="logoutUser()"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <button class="mobile-menu-btn">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </nav>
+
+    <header class="page-header" style="padding: 40px 5%;">
+        <h1>Your Shopping Cart</h1>
+        <p>Review your items before checkout.</p>
+    </header>
+
+    <div class="cart-container">
+        <div class="cart-items" id="cart-items-container">
+            <!-- Dynamic items -->
+            <h2>Cart empty</h2>
+        </div>
+
+        <div class="cart-summary">
+            <h3>Order Summary</h3>
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <span id="subtotal">$0.00</span>
+            </div>
+            <div class="summary-row">
+                <span>Shipping</span>
+                <span id="shipping">$0.00</span>
+            </div>
+            <div class="summary-total" style="display:flex; justify-content:space-between; margin-top:20px; padding-top:20px; border-top:2px solid #eee; font-size:1.25rem; font-weight:700; color:var(--primary-green);">
+                <span>Total</span>
+                <span id="total">$0.00</span>
+            </div>
+            <button class="btn" id="checkout-btn" style="margin-top: 25px; width: 100%;">Proceed to Checkout</button>
+            <a href="shop.html" class="btn btn-secondary" style="margin-top: 15px; text-decoration: none; width: 100%; text-align: center; display: inline-block; box-sizing: border-box;">Continue Shopping</a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="logo" style="color: white; justify-content: center; margin-bottom: 20px;">
+            <i class="fa-solid fa-wheat-awn"></i> AgriPool
+        </div>
+        <p>&copy; 2026 AgriPool. Designed for Farmers.</p>
+    </footer>
+
+    <script type="module" src="js/cart.js"></script>
+</body>
+</html>

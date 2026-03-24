@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transport - AgriPool</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <i class="fa-solid fa-wheat-awn"></i> AgriPool
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="transport.html" class="active">Transport</a></li>
+        </ul>
+        <div class="nav-actions">
+            <a href="cart.html" class="cart-icon">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="cart-count">0</span>
+            </a>
+            <div class="profile-container">
+                <div id="profile-btn" style="display: none;"></div>
+                <div class="profile-dropdown" id="profile-dropdown">
+                    <div class="dropdown-header">
+                        <h4 id="dropdown-name">User</h4>
+                        <p id="dropdown-email">user@example.com</p>
+                    </div>
+                    <ul class="dropdown-menu">
+                        <li><a href="activity.html"><i class="fa-solid fa-chart-line"></i> My Activity</a></li>
+                        <li><a href="orders.html"><i class="fa-solid fa-box"></i> My Orders</a></li>
+                        <li><a href="track.html"><i class="fa-solid fa-location-dot"></i> Track Order</a></li>
+                        <li><a href="#" onclick="logoutUser()"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <button class="mobile-menu-btn">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </nav>
+
+    <header class="page-header" style="padding: 40px 5%;">
+        <h1>Book Transport</h1>
+        <p>Reliable logistics for your farm yield. Book a truck or tractor easily.</p>
+    </header>
+
+    <div class="transport-container">
+        <div class="booking-section">
+            <div class="booking-form">
+                <h2>Schedule a Pickup</h2>
+                <form id="transport-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="pickup">Pickup Location</label>
+                            <input type="text" id="pickup" class="form-control" placeholder="e.g., Village Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="dropoff">Destination</label>
+                            <input type="text" id="dropoff" class="form-control" placeholder="e.g., Market Name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="crop">Goods Type</label>
+                        <select id="crop" class="form-control" required>
+                            <option value="">Select type of goods</option>
+                            <option value="crops">Crops</option>
+                            <option value="vegetables">Vegetables</option>
+                            <option value="fruits">Fruits</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <label style="margin-bottom: 8px; font-weight: 500; color: var(--text-dark);">Select Vehicle Type</label>
+                    <div class="vehicle-options">
+                        <label class="vehicle-card" style="display:block;">
+                            <input type="radio" name="vehicle" value="Truck" required style="display:none;">
+                            <i class="fa-solid fa-truck-moving"></i>
+                            <h4>Truck</h4>
+                        </label>
+                        <label class="vehicle-card" style="display:block;">
+                            <input type="radio" name="vehicle" value="Mini Truck" style="display:none;">
+                            <i class="fa-solid fa-truck"></i>
+                            <h4>Mini Truck</h4>
+                        </label>
+                        <label class="vehicle-card" style="display:block;">
+                            <input type="radio" name="vehicle" value="Tractor" style="display:none;">
+                            <i class="fa-solid fa-tractor"></i>
+                            <h4>Tractor</h4>
+                        </label>
+                        <label class="vehicle-card" style="display:block;">
+                            <input type="radio" name="vehicle" value="Pickup Van" style="display:none;">
+                            <i class="fa-solid fa-van-shuttle"></i>
+                            <h4>Pickup Van</h4>
+                        </label>
+                    </div>
+
+                    <div id="distance-result" style="margin-bottom:15px; font-weight:bold; display:none;"></div>
+                    <div id="calc-cost" style="margin-bottom:20px; color:var(--primary-green); font-size:1.2rem; font-weight:bold; display:none;"></div>
+
+                    <button type="submit" class="btn" id="check-btn">Calculate Distance & Cost</button>
+                    <button type="button" class="btn btn-secondary" id="confirm-booking-btn" style="display:none; margin-top:10px;">Confirm Booking</button>
+                </form>
+
+                <div id="booking-success" style="display:none; margin-top:30px; padding:20px; background:rgba(76,175,80,0.1); border-radius:8px; border:1px solid var(--primary-green);">
+                    <h3 style="color:var(--primary-green); margin-bottom:15px;">Transport booked. Driver will contact you.</h3>
+                    <p><strong>Driver Name:</strong> <span id="s-driver"></span></p>
+                    <p><strong>Phone Number:</strong> <span id="s-phone"></span></p>
+                    <p><strong>Vehicle:</strong> <span id="s-vehicle"></span></p>
+                    <p><strong>Number Plate:</strong> <span id="s-plate"></span></p>
+                </div>
+            </div>
+
+            <div class="transport-image-area" title="Agricultural Transport"></div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="logo" style="color: white; justify-content: center; margin-bottom: 20px;">
+            <i class="fa-solid fa-wheat-awn"></i> AgriPool
+        </div>
+        <p>&copy; 2026 AgriPool. Designed for Farmers.</p>
+    </footer>
+
+    <script type="module" src="js/transport.js"></script>
+    <script>
+        // Simple logic for toggle active visual selection
+        document.querySelectorAll('.vehicle-card input').forEach(input => {
+            input.addEventListener('change', (e) => {
+                document.querySelectorAll('.vehicle-card').forEach(c => c.classList.remove('active'));
+                if(e.target.checked) e.target.parentElement.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

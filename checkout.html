@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - AgriPool</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .checkout-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; margin: 40px auto; max-width: 1000px; padding: 0 5%; }
+        .checkout-box { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .payment-methods label { display: block; margin: 15px 0; cursor: pointer; padding: 15px; border: 1px solid #ddd; border-radius: 8px; }
+        .payment-methods label:hover, .payment-methods input:checked + label { border-color: var(--primary-green); background: rgba(76,175,80,0.05); }
+        .upi-apps { display: none; margin-top: 10px; padding-left: 20px; }
+        .timer-msg { display: none; color: #ffb300; font-weight: bold; margin-top: 15px; }
+        @media (max-width: 768px) { .checkout-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            <i class="fa-solid fa-wheat-awn"></i> AgriPool
+        </a>
+        <div class="nav-actions">
+            <div class="profile-container">
+                <div id="profile-btn" style="display: none;"></div>
+                <div class="profile-dropdown" id="profile-dropdown">
+                    <div class="dropdown-header">
+                        <h4 id="dropdown-name">User</h4>
+                        <p id="dropdown-email">user@example.com</p>
+                    </div>
+                    <ul class="dropdown-menu">
+                        <li><a href="activity.html"><i class="fa-solid fa-chart-line"></i> My Activity</a></li>
+                        <li><a href="orders.html"><i class="fa-solid fa-box"></i> My Orders</a></li>
+                        <li><a href="track.html"><i class="fa-solid fa-location-dot"></i> Track Order</a></li>
+                        <li><a href="#" onclick="logoutUser()"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="checkout-grid">
+        <div class="checkout-box">
+            <h2 style="color: var(--primary-green); margin-bottom: 20px;">Delivery Details</h2>
+            <form id="checkout-form">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="c-name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Delivery Address</label>
+                    <textarea id="c-address" class="form-control" rows="3" required></textarea>
+                </div>
+                
+                <h2 style="color: var(--primary-green); margin: 30px 0 20px;">Payment Method</h2>
+                <div class="payment-methods">
+                    <label>
+                        <input type="radio" name="payment" value="cod" checked> Cash on Delivery (COD)
+                    </label>
+                    <label>
+                        <input type="radio" name="payment" value="upi"> UPI Payment
+                        <div class="upi-apps" id="upi-apps-list">
+                            <label><input type="radio" name="upi_app" value="PhonePe"> PhonePe</label>
+                            <label><input type="radio" name="upi_app" value="Google Pay"> Google Pay</label>
+                            <label><input type="radio" name="upi_app" value="Paytm"> Paytm</label>
+                            <label><input type="radio" name="upi_app" value="FamPay"> FamPay</label>
+                            <label><input type="radio" name="upi_app" value="SuperMoney"> SuperMoney</label>
+                        </div>
+                    </label>
+                </div>
+                
+                <div class="timer-msg" id="timer-msg">Complete payment in <span id="time-left">60</span> seconds...</div>
+                
+                <div style="font-size: 0.85rem; color: var(--text-light); margin-top: 20px; font-style: italic;">Note: This is a demo payment process.</div>
+                
+                <button type="submit" class="btn" id="place-order-btn" style="margin-top: 20px; width: 100%;">Place Order</button>
+            </form>
+        </div>
+
+        <div class="checkout-box" style="height: fit-content;">
+            <h3>Order Summary</h3>
+            <div id="checkout-items" style="margin: 20px 0; border-bottom: 1px solid #eee; padding-bottom: 20px;"></div>
+            <div class="summary-row" style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                <span>Shipping</span>
+                <span id="c-shipping">$15.00</span>
+            </div>
+            <div class="summary-total" style="display:flex; justify-content:space-between; margin-top:10px; font-weight:bold; color:var(--primary-green); font-size:1.2rem;">
+                <span>Total</span>
+                <span id="c-total">$0.00</span>
+            </div>
+        </div>
+    </div>
+    
+    <script type="module" src="js/checkout.js"></script>
+</body>
+</html>

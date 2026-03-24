@@ -134,3 +134,34 @@ document.getElementById('transport-form').addEventListener('submit', async (e) =
         <h2>Total Cost: ₹${total.toFixed(0)}</h2>
     `;
 });
+
+// ✅ CONFIRM BOOKING BUTTON
+document.getElementById("confirm-booking-btn").addEventListener("click", async () => {
+
+    if (!currentUser) {
+        alert("Please login first");
+        return;
+    }
+
+    const pickup = document.getElementById('pickup').value;
+    const dropoff = document.getElementById('dropoff').value;
+    const vehicle = document.querySelector('input[name="vehicle"]:checked').value;
+
+    try {
+        await addDoc(collection(db, "transport_bookings"), {
+            userId: currentUser.uid,
+            pickup: pickup,
+            dropoff: dropoff,
+            vehicle: vehicle,
+            distance: currentDistance,
+            cost: currentCost,
+            createdAt: new Date()
+        });
+
+        alert("✅ Booking Confirmed!");
+
+    } catch (error) {
+        console.error(error);
+        alert("❌ Booking failed");
+    }
+});

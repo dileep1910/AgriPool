@@ -19,11 +19,10 @@
             align-items: center;
             justify-content: space-between;
             position: relative;
+            z-index: 1000;
         }
 
-        .nav-left {
-            width: 60px;
-        }
+        .nav-left { width: 60px; }
 
         .nav-center {
             position: absolute;
@@ -44,14 +43,9 @@
             text-decoration: none;
         }
 
-        .back-btn:hover {
-            color: var(--primary-green);
-        }
+        .back-btn:hover { color: var(--primary-green); }
 
-        /* PROFILE FIX */
-        .profile-container {
-            position: relative;
-        }
+        .profile-container { position: relative; }
 
         #profile-btn {
             width: 38px;
@@ -65,10 +59,8 @@
             font-weight: 600;
             font-size: 16px;
             cursor: pointer;
-            line-height: 1;
         }
 
-        /* DROPDOWN */
         .profile-dropdown {
             position: absolute;
             top: 50px;
@@ -81,9 +73,7 @@
             z-index: 1000;
         }
 
-        .profile-dropdown.show {
-            display: block;
-        }
+        .profile-dropdown.show { display: block; }
 
         .dropdown-header {
             padding: 15px;
@@ -95,62 +85,26 @@
             padding: 10px;
         }
 
-        .dropdown-menu li {
-            margin: 10px 0;
-        }
+        .dropdown-menu li { margin: 10px 0; }
 
         .dropdown-menu a {
             text-decoration: none;
             color: var(--text-dark);
         }
 
-        .dropdown-menu a:hover {
-            color: var(--primary-green);
-        }
+        .dropdown-menu a:hover { color: var(--primary-green); }
 
-        /* CENTER FORM FIX */
+        /* ✅ FIXED CONTAINER (NO HEIGHT BREAK) */
         .transport-container {
             display: flex;
             justify-content: center;
+            align-items: flex-start;
+            padding-top: 30px;
         }
 
         .booking-section {
             max-width: 1000px;
             width: 100%;
-        }
-
-        /* PERFECT CENTER INITIAL */
-        #profile-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .transport-container {
-            height: calc(100vh - 120px);
-            /* full screen minus navbar+header */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .booking-section {
-            width: 100%;
-            max-width: 1000px;
-        }
-
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        .page-header {
-            flex-shrink: 0;
-        }
-
-        .transport-container {
-            flex: 1;
         }
     </style>
 </head>
@@ -159,22 +113,18 @@
 
     <!-- NAVBAR -->
     <nav class="navbar">
-
-        <!-- LEFT -->
         <div class="nav-left">
             <a href="index.html" class="back-btn">
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
         </div>
 
-        <!-- CENTER -->
         <div class="nav-center">
             <a href="index.html" class="logo">
                 <i class="fa-solid fa-wheat-awn"></i> AgriPool
             </a>
         </div>
 
-        <!-- RIGHT -->
         <div class="nav-right">
             <div class="profile-container">
                 <div id="profile-btn">K</div>
@@ -193,7 +143,6 @@
                 </div>
             </div>
         </div>
-
     </nav>
 
     <!-- HEADER -->
@@ -215,8 +164,7 @@
                     <div class="form-group">
                         <label>Pickup Point</label>
                         <div style="position:relative;">
-                            <input type="text" id="pickup" class="form-control" placeholder="Enter village / city"
-                                autocomplete="off">
+                            <input type="text" id="pickup" class="form-control" placeholder="Enter village / city" autocomplete="off">
                             <div id="pickup-suggestions" class="suggestions-box"></div>
                         </div>
                     </div>
@@ -225,8 +173,7 @@
                     <div class="form-group">
                         <label>Drop Point</label>
                         <div style="position:relative;">
-                            <input type="text" id="dropoff" class="form-control" placeholder="Enter destination"
-                                autocomplete="off">
+                            <input type="text" id="dropoff" class="form-control" placeholder="Enter destination" autocomplete="off">
                             <div id="dropoff-suggestions" class="suggestions-box"></div>
                         </div>
                     </div>
@@ -246,7 +193,6 @@
 
                     <!-- VEHICLES -->
                     <div class="vehicle-options">
-
                         <label class="vehicle-card">
                             <input type="radio" name="vehicle" value="truck" hidden>
                             <i class="fa-solid fa-truck-moving"></i>
@@ -264,12 +210,15 @@
                             <i class="fa-solid fa-tractor"></i>
                             <h4>Tractor</h4>
                         </label>
-
                     </div>
 
-                    <!-- RESULT BOX -->
+                    <!-- RESULT -->
                     <div id="result-box" class="result-box"></div>
 
+                    <!-- ✅ ADDED CALCULATE BUTTON -->
+                    <button type="submit" class="btn">Calculate</button>
+
+                    <!-- CONFIRM -->
                     <button type="button" id="confirm-booking-btn" class="btn btn-secondary" style="display:none;">
                         Confirm Booking
                     </button>
@@ -301,5 +250,4 @@
     </script>
 
 </body>
-
 </html>

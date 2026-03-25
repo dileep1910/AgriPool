@@ -1,305 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transport - AgriPool</title>
-
-    <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <link rel="stylesheet" href="styles.css">
-
-    <style>
-        /* NAVBAR FIX */
-        .navbar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: relative;
-        }
-
-        .nav-left {
-            width: 60px;
-        }
-
-        .nav-center {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .nav-right {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            width: 60px;
-        }
-
-        .back-btn {
-            font-size: 1.4rem;
-            color: var(--text-dark);
-            text-decoration: none;
-        }
-
-        .back-btn:hover {
-            color: var(--primary-green);
-        }
-
-        /* PROFILE FIX */
-        .profile-container {
-            position: relative;
-        }
-
-        #profile-btn {
-            width: 38px;
-            height: 38px;
-            background: var(--primary-green);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 16px;
-            cursor: pointer;
-            line-height: 1;
-        }
-
-        /* DROPDOWN */
-        .profile-dropdown {
-            position: absolute;
-            top: 50px;
-            right: 0;
-            background: white;
-            box-shadow: var(--shadow);
-            border-radius: 10px;
-            width: 220px;
-            display: none;
-            z-index: 1000;
-        }
-
-        .profile-dropdown.show {
-            display: block;
-        }
-
-        .dropdown-header {
-            padding: 15px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .dropdown-menu {
-            list-style: none;
-            padding: 10px;
-        }
-
-        .dropdown-menu li {
-            margin: 10px 0;
-        }
-
-        .dropdown-menu a {
-            text-decoration: none;
-            color: var(--text-dark);
-        }
-
-        .dropdown-menu a:hover {
-            color: var(--primary-green);
-        }
-
-        /* CENTER FORM FIX */
-        .transport-container {
-            display: flex;
-            justify-content: center;
-        }
-
-        .booking-section {
-            max-width: 1000px;
-            width: 100%;
-        }
-
-        /* PERFECT CENTER INITIAL */
-        #profile-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .transport-container {
-            height: calc(100vh - 120px);
-            /* full screen minus navbar+header */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .booking-section {
-            width: 100%;
-            max-width: 1000px;
-        }
-
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        .page-header {
-            flex-shrink: 0;
-        }
-
-        .transport-container {
-            flex: 1;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Transport</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
 
-    <!-- NAVBAR -->
-    <nav class="navbar">
+<div class="transport-container">
+<div class="booking-section">
+<div class="booking-form">
 
-        <!-- LEFT -->
-        <div class="nav-left">
-            <a href="index.html" class="back-btn">
-                <i class="fa-solid fa-arrow-left"></i>
-            </a>
-        </div>
+<h2>Book Transport</h2>
 
-        <!-- CENTER -->
-        <div class="nav-center">
-            <a href="index.html" class="logo">
-                <i class="fa-solid fa-wheat-awn"></i> AgriPool
-            </a>
-        </div>
+<form id="transport-form">
 
-        <!-- RIGHT -->
-        <div class="nav-right">
-            <div class="profile-container">
-                <div id="profile-btn">K</div>
+<label>Pickup Point</label>
+<input type="text" id="pickup" class="form-control">
+<div id="pickup-suggestions" class="suggestions-box"></div>
 
-                <div class="profile-dropdown" id="profile-dropdown">
-                    <div class="dropdown-header">
-                        <h4 id="dropdown-name">Kumar</h4>
-                        <p id="dropdown-email">kumar@gmail.com</p>
-                    </div>
-                    <ul class="dropdown-menu">
-                        <li><a href="activity.html">My Activity</a></li>
-                        <li><a href="orders.html">My Orders</a></li>
-                        <li><a href="track.html">Track Order</a></li>
-                        <li><a href="#" onclick="logoutUser()">Logout</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+<label>Drop Point</label>
+<input type="text" id="dropoff" class="form-control">
+<div id="dropoff-suggestions" class="suggestions-box"></div>
 
-    </nav>
+<label>Goods</label>
+<select class="form-control">
+<option>Crops</option>
+<option>Vegetables</option>
+<option>Fruits</option>
+<option>Cotton</option>
+<option>Flowers</option>
+</select>
 
-    <!-- HEADER -->
-    <header class="page-header" style="padding: 20px 5%;">
-        <h1>Book Transport</h1>
-        <p>Reliable logistics for your farm yield</p>
-    </header>
+<div class="vehicle-options">
 
-    <!-- FORM -->
-    <div class="transport-container">
-        <div class="booking-section">
-            <div class="booking-form">
+<label class="vehicle-card">
+<input type="radio" name="vehicle" value="truck" hidden>
+<i class="fa-solid fa-truck"></i>
+<h4>Truck</h4>
+</label>
 
-                <h2>Schedule Pickup</h2>
+<label class="vehicle-card">
+<input type="radio" name="vehicle" value="mini" hidden>
+<i class="fa-solid fa-truck"></i>
+<h4>Mini</h4>
+</label>
 
-                <form id="transport-form">
+<label class="vehicle-card">
+<input type="radio" name="vehicle" value="tractor" hidden>
+<i class="fa-solid fa-tractor"></i>
+<h4>Tractor</h4>
+</label>
 
-                    <!-- PICKUP -->
-                    <div class="form-group">
-                        <label>Pickup Point</label>
-                        <div style="position:relative;">
-                            <input type="text" id="pickup" class="form-control" placeholder="Enter village / city"
-                                autocomplete="off">
-                            <div id="pickup-suggestions" class="suggestions-box"></div>
-                        </div>
-                    </div>
+</div>
 
-                    <!-- DROPOFF -->
-                    <div class="form-group">
-                        <label>Drop Point</label>
-                        <div style="position:relative;">
-                            <input type="text" id="dropoff" class="form-control" placeholder="Enter destination"
-                                autocomplete="off">
-                            <div id="dropoff-suggestions" class="suggestions-box"></div>
-                        </div>
-                    </div>
+<button type="submit" class="btn">Calculate</button>
 
-                    <!-- GOODS TYPE -->
-                    <div class="form-group">
-                        <label>Goods Type</label>
-                        <select id="crop" class="form-control">
-                            <option value="">Select Category</option>
-                            <option value="crops">Crops</option>
-                            <option value="vegetables">Vegetables</option>
-                            <option value="fruits">Fruits</option>
-                            <option value="cotton">Cotton</option>
-                            <option value="flowers">Flowers</option>
-                        </select>
-                    </div>
+<div id="result-box" class="result-box"></div>
 
-                    <!-- VEHICLES -->
-                    <div class="vehicle-options">
+<button type="button" id="confirm-booking-btn" class="btn btn-secondary" style="display:none;">
+Confirm Booking
+</button>
 
-                        <label class="vehicle-card">
-                            <input type="radio" name="vehicle" value="truck" hidden>
-                            <i class="fa-solid fa-truck-moving"></i>
-                            <h4>Truck</h4>
-                        </label>
+</form>
 
-                        <label class="vehicle-card">
-                            <input type="radio" name="vehicle" value="mini" hidden>
-                            <i class="fa-solid fa-truck"></i>
-                            <h4>Mini Truck</h4>
-                        </label>
+</div>
+</div>
+</div>
 
-                        <label class="vehicle-card">
-                            <input type="radio" name="vehicle" value="tractor" hidden>
-                            <i class="fa-solid fa-tractor"></i>
-                            <h4>Tractor</h4>
-                        </label>
-
-                    </div>
-
-                    <!-- RESULT BOX -->
-                    <div id="result-box" class="result-box"></div>
-
-                    <button type="button" id="confirm-booking-btn" class="btn btn-secondary" style="display:none;">
-                        Confirm Booking
-                    </button>
-
-                </form>
-
-            </div>
-
-            <div class="transport-image-area"></div>
-        </div>
-    </div>
-
-    <!-- SCRIPT -->
-    <script type="module" src="js/transport.js"></script>
-
-    <script>
-        const profileBtn = document.getElementById("profile-btn");
-        const dropdown = document.getElementById("profile-dropdown");
-
-        profileBtn.addEventListener("click", () => {
-            dropdown.classList.toggle("show");
-        });
-
-        document.addEventListener("click", (e) => {
-            if (!profileBtn.contains(e.target) && !dropdown.contains(e.target)) {
-                dropdown.classList.remove("show");
-            }
-        });
-    </script>
+<script type="module" src="js/transport.js"></script>
 
 </body>
-
 </html>

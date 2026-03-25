@@ -817,3 +817,41 @@ footer p {
   border-color: green;
   background: rgba(0, 255, 0, 0.1);
 }
+
+.result-box {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  background: #f5f5f5;
+  display: none;
+}
+
+.result-box.success {
+  border-left: 5px solid green;
+}
+
+.result-box.error {
+  border-left: 5px solid red;
+}
+
+.vehicle-card {
+  border: 2px solid #ddd;
+  padding: 12px;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 8px;
+}
+
+.vehicle-card.active {
+  border-color: green;
+  background: rgba(0,255,0,0.1);
+}
+
+.suggestions-box {
+  position: absolute;
+  width: 100%;
+  background: white;
+  border: 1px solid #ddd;
+  max-height: 200px;
+  overflow-y: auto;
+}

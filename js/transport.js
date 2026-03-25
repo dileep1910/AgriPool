@@ -13,8 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
     currentUser = JSON.parse(localStorage.getItem('agripool_user'));
 });
 
-const API_KEY_OC = "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6IjExMzNkMDJiYmVlYTQ2MDI5NzU3MTFmYjQ0NDhmYjgwIiwiaCI6Im11cm11cjY0In0=";
-
+const API_KEY_OC = "1b7f11b5d9d8474bbfdbffac0a1de484";   // dropdown
+const ORS_API_KEY = "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6IjExMzNkMDJiYmVlYTQ2MDI5NzU3MTFmYjQ0NDhmYjgwIiwiaCI6Im11cm11cjY0In0=";      // distance
 // ================= AUTOCOMPLETE =================
 async function getSuggestions(query, boxId, inputId) {
     if (query.length < 3) {

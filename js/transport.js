@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     currentUser = JSON.parse(localStorage.getItem('agripool_user'));
 });
 
-const API_KEY_OC = "1b7f11b5d9d8474bbfdbffac0a1de484";
+const API_KEY_OC = "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6IjExMzNkMDJiYmVlYTQ2MDI5NzU3MTFmYjQ0NDhmYjgwIiwiaCI6Im11cm11cjY0In0=";
 
 // ================= AUTOCOMPLETE =================
 async function getSuggestions(query, boxId, inputId) {
@@ -90,8 +90,20 @@ async function getRealDistance(pickup, dropoff) {
 
         if (!p1 || !p2) return null;
 
-        return calculateDistance(p1.lat, p1.lng, p2.lat, p2.lng);
-    } catch {
+        const res = await fetch(
+            `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${ORS_API_KEY}&start=${p1.lng},${p1.lat}&end=${p2.lng},${p2.lat}`
+        );
+
+        const data = await res.json();
+
+        if (!data.features || !data.features.length) return null;
+
+        const distanceMeters = data.features[0].properties.summary.distance;
+
+        return distanceMeters / 1000; // km
+
+    } catch (err) {
+        console.error(err);
         return null;
     }
 }
